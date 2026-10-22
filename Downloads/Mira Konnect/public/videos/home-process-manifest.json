@@ -1,0 +1,42 @@
+{
+  "poster": "/videos/home-process-poster.jpg",
+  "segments": [
+    {
+      "order": 1,
+      "label": "Who Mira Konnect is",
+      "start": 0,
+      "end": 9
+    },
+    {
+      "order": 2,
+      "label": "Recruitment services",
+      "start": 9,
+      "end": 18
+    },
+    {
+      "order": 3,
+      "label": "Ten industries",
+      "start": 18,
+      "end": 27
+    },
+    {
+      "order": 4,
+      "label": "Process & solutions",
+      "start": 27,
+      "end": 36
+    },
+    {
+      "order": 5,
+      "label": "People-first approach",
+      "start": 36,
+      "end": 45
+    },
+    {
+      "order": 6,
+      "label": "Tagline & call to action",
+      "start": 45,
+      "end": 55
+    }
+  ],
+  "duration": 55
+}

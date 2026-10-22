@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --mk-navy: #0f2744;
+  --mk-navy-light: #1a3a5c;
+  --mk-teal: #1a7f7a;
+  --mk-teal-dark: #146560;
+  --mk-coral: #e07a5f;
+  --mk-sand: #f4f1ec;
+  --mk-slate: #4a5568;
+  --mk-muted: #6b7280;
+  --background: #faf9f7;
+  --foreground: var(--mk-navy);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-mk-navy: var(--mk-navy);
+  --color-mk-navy-light: var(--mk-navy-light);
+  --color-mk-teal: var(--mk-teal);
+  --color-mk-teal-dark: var(--mk-teal-dark);
+  --color-mk-coral: var(--mk-coral);
+  --color-mk-sand: var(--mk-sand);
+  --color-mk-slate: var(--mk-slate);
+  --color-mk-muted: var(--mk-muted);
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-fraunces);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+@keyframes mk-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
