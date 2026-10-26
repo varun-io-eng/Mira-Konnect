@@ -1,6 +1,17 @@
 /**
- * Mira Konnect demo seed — run after migrations.
- * Set IS_DEMO_SEED=true in production only for intentional demo environments.
+ * Mira Konnect demo seed — run after migrations to populate demo data.
+ *
+ * This script creates:
+ * - System roles (SUPER_ADMIN, ADMIN, RECRUITER, EMPLOYER, CANDIDATE)
+ * - Demo users (admin, candidate, employer with default passwords)
+ * - Industries
+ * - Sample jobs
+ * - Blog posts
+ *
+ * IMPORTANT: Roles are now auto-seeded during registration if missing,
+ * so this script is primarily for demo data and manual setup.
+ *
+ * Run manually with: npm run db:seed
  */
 import { PrismaClient, RoleName, JobStatus, BlogStatus } from "@prisma/client";
 import bcrypt from "bcryptjs";

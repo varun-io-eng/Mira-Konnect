@@ -9,6 +9,31 @@ import { prisma } from "@/lib/db";
 import { isFindJobRedirect } from "@/lib/find-job";
 import { loginSchema, registerSchema } from "@/lib/validations/auth";
 
+/**
+ * Ensure system roles exist. Creates them if missing.
+ * This is a fail-safe to handle cases where seeding didn't run during deployment.
+ */
+async function ensureRolesExist() {
+  const existingRoles = await prisma.role.findMany();
+  const existingRoleNames = new Set(existingRoles.map((r) => r.name));
+
+  const rolesToCreate = Object.values(RoleName).filter(
+    (name) => !existingRoleNames.has(name),
+  );
+
+  if (rolesToCreate.length > 0) {
+    console.log(`Auto-seeding ${rolesToCreate.length} missing system roles...`);
+    await Promise.all(
+      rolesToCreate.map((name) =>
+        prisma.role.create({
+          data: { name, description: `${name} role` },
+        }),
+      ),
+    );
+    console.log("System roles auto-seeded successfully.");
+  }
+}
+
 export type ActionResult = { ok: true } | { ok: false; error: string };
 
 export async function loginAction(formData: FormData): Promise<ActionResult> {
@@ -75,10 +100,13 @@ export async function registerAction(formData: FormData): Promise<ActionResult> 
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) return { ok: false, error: "An account with this email already exists" };
 
+  // Ensure roles exist before registration
+  await ensureRolesExist();
+
   const roleName =
     parsed.data.accountType === "employer" ? RoleName.EMPLOYER : RoleName.CANDIDATE;
   const role = await prisma.role.findUnique({ where: { name: roleName } });
-  if (!role) return { ok: false, error: "System roles not seeded. Run npm run db:seed" };
+  if (!role) return { ok: false, error: "Failed to initialize system roles. Please try again." };
 
   const passwordHash = await hashPassword(parsed.data.password);
 
